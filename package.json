@@ -1,0 +1,31 @@
+{
+  "name": "webx-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "dev-proxy": "bin/dev-proxy.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-proxy": "node ./bin/dev-proxy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaonanguitar/webx-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaonanguitar/webx-cli/issues"
+  },
+  "homepage": "https://github.com/xiaonanguitar/webx-cli#readme",
+  "dependencies": {
+    "puppeteer-core": "^24.15.0",
+    "commander": "^10.0.0",
+    "undici": "^6.1.3"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

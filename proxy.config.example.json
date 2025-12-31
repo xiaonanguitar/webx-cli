@@ -1,0 +1,22 @@
+{
+  "mappings": [
+    {
+      "prefix": "/api",
+      "target": "https://api.prod.example.com",
+      "pathRewrite": { "^/api": "/v1" },
+      "headers": {
+        "x-forwarded-environment": "prod"
+      },
+      "auth": {
+        "type": "form",
+        "loginUrl": "/login",
+        "usernameField": "input[name=\"username\"]",
+        "passwordField": "input[name=\"password\"]",
+        "submitSelector": "button[type=submit]",
+        "username": "your-username",
+        "password": "your-password",
+        "postLoginSelector": ".user-profile"
+      }
+    }
+  ]
+}

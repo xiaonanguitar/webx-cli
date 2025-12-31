@@ -1,0 +1,22 @@
+{
+  "mappings": [
+    {
+      "prefix": "/api",
+      "target": "https://api.prod.example.com",
+      "pathRewrite": { "^/api": "/v1" },
+      "headers": {
+        "x-forwarded-environment": "prod"
+      },
+      "auth": {
+        "type": "form",
+        "loginUrl": "https://github.com/login",
+        "usernameField": "input[name='login']",
+        "passwordField": "input[name='password']",
+        "submitSelector": "input[name='commit']",
+        "username": "zhangzhinan1987@126.com",
+        "password": "Zzn87527@",
+        "postLoginSelector": ".user-profile"
+      }
+    }
+  ]
+}

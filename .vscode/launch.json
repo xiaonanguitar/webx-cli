@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "调试 dev-proxy CLI",
+      "program": "${workspaceFolder}/bin/dev-proxy.js",
+      "args": ["--port", "8081", "--config", "proxy.config.json", "--executable-path", "C:/Users/LENOVO/AppData/Local/Google/Chrome/Application/chrome.exe"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}
