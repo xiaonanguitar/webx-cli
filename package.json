@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "dev-proxy": "bin/dev-proxy.js"
+    "dev-proxy": "bin/dev-proxy.js",
+    "dev-proxy-server": "bin/dev-proxy-server.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-proxy": "node ./bin/dev-proxy.js"
+    "dev-proxy": "node ./bin/dev-proxy.js",
+    "dev-proxy-server": "node ./bin/dev-proxy-server.js"
   },
   "repository": {
     "type": "git",

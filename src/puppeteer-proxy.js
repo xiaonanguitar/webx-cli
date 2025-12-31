@@ -303,6 +303,14 @@ module.exports = async function startProxy({
         const cookies = await loginPage.cookies();
         const cookiePairs = cookies.map((c) => `${c.name}=${c.value}`);
         if (cookiePairs.length) mapping._cookieHeader = cookiePairs.join("; ");
+        // 自动同步 cookie 到主 page，确保主页面继承登录态
+        try {
+          if (cookies && cookies.length) {
+            await page.setCookie(...cookies);
+          }
+        } catch (err) {
+          console.warn('[自动登录] setCookie 到主页面失败', err);
+        }
       } catch (e) {
         let pageInfo = "";
         try {
