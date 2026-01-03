@@ -32,6 +32,11 @@ app.get('/api/goods', (req, res) => {
   res.json({ code: 0, data: GOODS });
 });
 
+// 退出登录接口
+app.post('/api/logout', (req, res) => {
+  res.json({ code: 0, msg: '已退出登录' });
+});
+
 app.listen(4000, () => {
   console.log('Mock API server running at http://localhost:4000');
 });

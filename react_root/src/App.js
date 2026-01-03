@@ -4,7 +4,11 @@ import './App.css';
 function App() {
 
   function send() {
-    fetch('/api/users')
+    fetch('/api/goods', {
+      headers: {
+        "authorization": "Bearer token-admin"
+      }
+    })
       .then(res => res.json())
       .then(data => {
         console.log('请求结果：', data);

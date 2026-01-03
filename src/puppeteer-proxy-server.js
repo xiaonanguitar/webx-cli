@@ -19,7 +19,7 @@ async function startProxyServer({ configPath, headless = false, port = 6677, exe
       const targetBase = mapping.target.replace(/\/$/, '');
       const urlObj = new URL(req.url, `http://localhost:${port}`);
       const rewrittenPath = applyPathRewrite(urlObj.pathname + urlObj.search, mapping.pathRewrite);
-      const targetUrl = `${targetBase}${rewrittenPath}`;
+      const targetUrl = `http://localhost:3000${req.url}`;
       let body = Buffer.alloc(0);
       req.on('data', chunk => { body = Buffer.concat([body, chunk]); });
       req.on('end', async () => {
@@ -34,11 +34,13 @@ async function startProxyServer({ configPath, headless = false, port = 6677, exe
           body: ['GET', 'HEAD'].includes(req.method) ? undefined : body.toString()
         };
         const result = await page.evaluate(async (url, opts) => {
-          const res = await fetch(url, opts);
-          const buf = new Uint8Array(await res.arrayBuffer());
-          const headers = {};
-          res.headers.forEach((v, k) => { headers[k] = v; });
-          return { status: res.status, headers, body: Array.from(buf) };
+            let res = await fetch(url, opts).catch(err => {
+              return new Response('puppeteer-proxy fetch error: ' + err.message, { status: 502 });
+            });
+            const buf = new Uint8Array(await res.arrayBuffer());
+            const headers = {};
+            res.headers.forEach((v, k) => { headers[k] = v; });
+            return { status: res.status, headers, body: Array.from(buf) };
         }, targetUrl, fetchOpts);
         res.writeHead(result.status, result.headers);
         res.end(Buffer.from(result.body));

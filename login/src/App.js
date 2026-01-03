@@ -1,17 +1,32 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import Home from './Home';
 
+function AppRoutes() {
+  const [isLogin, setIsLogin] = useState(!!localStorage.getItem('token'));
+  const navigate = useNavigate();
+  useEffect(() => {
+    const onStorage = () => setIsLogin(!!localStorage.getItem('token'));
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+  useEffect(() => {
+    if (isLogin) navigate('/home');
+  }, [isLogin, navigate]);
+  return (
+    <Routes>
+      <Route path="/" element={isLogin ? <Navigate to="/home" /> : <Login onLogin={() => setIsLogin(true)} />} />
+      <Route path="/login" element={<Login onLogin={() => setIsLogin(true)} />} />
+      <Route path="/home" element={isLogin ? <Home onLogout={() => setIsLogin(false)} /> : <Navigate to="/login" />} />
+    </Routes>
+  );
+}
+
 function App() {
-  const isLogin = !!localStorage.getItem('token');
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={isLogin ? <Navigate to="/home" /> : <Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={isLogin ? <Home /> : <Navigate to="/login" />} />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

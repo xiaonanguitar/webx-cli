@@ -9,12 +9,12 @@
       },
       "auth": {
         "type": "form",
-        "loginUrl": "https://github.com/login",
-        "usernameField": "input[name='login']",
+        "loginUrl": "http://localhost:3000/login",
+        "usernameField": "input[name='username']",
         "passwordField": "input[name='password']",
-        "submitSelector": "input[name='commit']",
-        "username": "zhangzhinan1987@126.com",
-        "password": "Zzn87527@",
+        "submitSelector": "button[type='submit']",
+        "username": "admin",
+        "password": "123456",
         "postLoginSelector": ".user-profile"
       }
     }
