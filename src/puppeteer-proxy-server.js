@@ -29,9 +29,10 @@ async function startProxyServer({ configPath, headless = false, channel }) {
   const server = http.createServer(async (req, res) => {
     try {
       const targetBase = mapping.target.replace(/\/$/, '');
-      const urlObj = new URL(req.url, `http://localhost:${port}`);
+      const longinUrl = new URL(mapping.auth?.loginUrl);
+      const urlObj = new URL(req.url, longinUrl.origin);
       const rewrittenPath = applyPathRewrite(urlObj.pathname + urlObj.search, mapping.pathRewrite);
-      const targetUrl = `http://localhost:3000${req.url}`;
+      const targetUrl = `${longinUrl.origin}${req.url}`;
       let body = Buffer.alloc(0);
       req.on('data', chunk => { body = Buffer.concat([body, chunk]); });
       req.on('end', async () => {
@@ -63,7 +64,7 @@ async function startProxyServer({ configPath, headless = false, channel }) {
     }
   });
   server.listen(port, () => {
-    console.log(`puppeteer-proxy server listening on http://localhost:${port}`);
+    console.log(`sicar-webx-cli proxy server listening on http://localhost:${port}`);
   });
 }
 
