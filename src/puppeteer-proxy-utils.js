@@ -1,4 +1,6 @@
 const { fetch } = require('undici');
+const fs = require('fs');
+const path = require('path');
 
 async function getPuppeteer() {
   try { return { pkg: require('puppeteer'), name: 'puppeteer' }; } catch (e) {}
@@ -50,7 +52,7 @@ async function performLoginForMapping(page, mapping, browser) {
       if (auth.postLoginSelector) {
         await page.waitForSelector(auth.postLoginSelector, { timeout: 10000 });
       } else {
-        await page.waitForTimeout(2000);
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
     } catch (e) {
       console.error('puppeteer-proxy login failed:', e);
@@ -58,4 +60,20 @@ async function performLoginForMapping(page, mapping, browser) {
   }
 }
 
-module.exports = { getPuppeteer, performLoginForMapping, applyPathRewrite };
+
+function getInstalledChromeVersion(cacheDir) {
+  const chromeDir = path.join(cacheDir, 'chrome');
+  if (!fs.existsSync(chromeDir)) {
+    throw new Error(`Chrome directory not found: ${chromeDir}`);
+  }
+  // 读取 chrome 目录下的所有文件夹，找到以 'stable-' 开头的文件夹
+  const items = fs.readdirSync(chromeDir);
+  const stableFolder = items.find(item => item.startsWith('win64-'));
+  if (!stableFolder) {
+    throw new Error(`No stable version found in ${chromeDir}`);
+  }
+  // 提取版本号，例如 'stable-121.0.6167.85' -> '121.0.6167.85'
+  return stableFolder.replace('win64-', '');
+}
+
+module.exports = { getPuppeteer, performLoginForMapping, applyPathRewrite, getInstalledChromeVersion };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": {
     "dev-proxy": "bin/dev-proxy.js",
-    "dev-proxy-server": "bin/dev-proxy-server.js"
+    "sicar-webx-cli proxy": "bin/dev-proxy-server.js"
   },
   "scripts": {
     "postinstall": "puppeteer browsers install chrome@stable",

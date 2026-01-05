@@ -10,12 +10,12 @@
       "auth": {
         "type": "form",
         "loginUrl": "http://localhost:3000/login",
+        "port": 6677,
         "usernameField": "input[name='username']",
         "passwordField": "input[name='password']",
         "submitSelector": "button[type='submit']",
         "username": "admin",
-        "password": "123456",
-        "postLoginSelector": ".user-profile"
+        "password": "123456"
       }
     }
   ]
