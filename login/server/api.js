@@ -24,12 +24,30 @@ app.post('/api/login', (req, res) => {
 });
 
 // 货物查询接口
+
 app.get('/api/goods', (req, res) => {
   const token = req.headers['authorization'];
   if (!USERS.find(u => `Bearer ${u.token}` === token)) {
     return res.status(401).json({ code: 1, msg: '未登录' });
   }
   res.json({ code: 0, data: GOODS });
+});
+
+// 新增货物接口
+app.post('/api/goods', (req, res) => {
+  const token = req.headers['authorization'];
+  if (!USERS.find(u => `Bearer ${u.token}` === token)) {
+    return res.status(401).json({ code: 1, msg: '未登录' });
+  }
+  const { id, name, price } = req.body;
+  if (!id || !name || price === undefined) {
+    return res.status(400).json({ code: 1, msg: '参数不完整' });
+  }
+  if (GOODS.find(g => g.id == id)) {
+    return res.status(400).json({ code: 1, msg: 'ID已存在' });
+  }
+  GOODS.push({ id, name, price: parseFloat(price) });
+  res.json({ code: 0, msg: '添加成功' });
 });
 
 // 退出登录接口
