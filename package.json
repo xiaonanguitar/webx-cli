@@ -8,6 +8,8 @@
     "dev-proxy-server": "bin/dev-proxy-server.js"
   },
   "scripts": {
+    "postinstall": "puppeteer browsers install chrome@stable",
+    "install:browser": "puppeteer browsers install chrome@stable --path chromium",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-proxy": "node ./bin/dev-proxy.js",
     "dev-proxy-server": "node ./bin/dev-proxy-server.js"
@@ -24,6 +26,8 @@
   "homepage": "https://github.com/xiaonanguitar/webx-cli#readme",
   "dependencies": {
     "puppeteer-core": "^24.15.0",
+    "@puppeteer/browsers": "^1.0.0",
+    "puppeteer": "^24.0.0",
     "commander": "^10.0.0",
     "undici": "^6.1.3"
   },

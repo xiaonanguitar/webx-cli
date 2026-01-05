@@ -18,4 +18,4 @@ const headless = !!opts.headless;
 const executablePath = opts.executablePath || process.env.PUPPETEER_EXECUTABLE_PATH;
 const channel = opts.channel || process.env.PUPPETEER_CHANNEL;
 
-startProxyServer({ configPath, port, headless, executablePath, channel });
+startProxyServer({ configPath, port, headless, channel });
